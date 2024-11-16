@@ -7,46 +7,31 @@ model = joblib.load('lung_cancer_prediction_model.pkl')
 
 # Streamlit interfeysi
 st.title("Lung Cancer Prediction")
-st.write("Please enter the following details to predict lung cancer risk:")
+st.write("Kiritilgan ma'lumotlarga asoslanib, o'pka saratonini bashorat qiluvchi dastur")
 
-# Kirish formasi
-gender = st.selectbox("Gender", options=["Female", "Male"])
+# Foydalanuvchi uchun kirish maydonlari
+gender = st.selectbox("Gender (0=Female, 1=Male):", [0, 1])
 age = st.number_input("Age:", min_value=1, max_value=120, step=1)
-smoking = st.selectbox("Smoking:", options=["No", "Yes"])
-yellow_fingers = st.selectbox("Yellow Fingers:", options=["No", "Yes"])
-anxiety = st.selectbox("Anxiety:", options=["No", "Yes"])
-peer_pressure = st.selectbox("Peer Pressure:", options=["No", "Yes"])
-chronic_disease = st.selectbox("Chronic Disease:", options=["No", "Yes"])
-fatigue = st.selectbox("Fatigue:", options=["No", "Yes"])
-allergy = st.selectbox("Allergy:", options=["No", "Yes"])
-wheezing = st.selectbox("Wheezing:", options=["No", "Yes"])
-alcohol_consuming = st.selectbox("Alcohol Consuming:", options=["No", "Yes"])
-coughing = st.selectbox("Coughing:", options=["No", "Yes"])
-shortness_of_breath = st.selectbox("Shortness of Breath:", options=["No", "Yes"])
-swallowing_difficulty = st.selectbox("Swallowing Difficulty:", options=["No", "Yes"])
-chest_pain = st.selectbox("Chest Pain:", options=["No", "Yes"])
-
-# Ma'lumotlarni tayyorlash
-features = np.array([[
-    1 if gender == "Male" else 0,
-    age,
-    1 if smoking == "Yes" else 0,
-    1 if yellow_fingers == "Yes" else 0,
-    1 if anxiety == "Yes" else 0,
-    1 if peer_pressure == "Yes" else 0,
-    1 if chronic_disease == "Yes" else 0,
-    1 if fatigue == "Yes" else 0,
-    1 if allergy == "Yes" else 0,
-    1 if wheezing == "Yes" else 0,
-    1 if alcohol_consuming == "Yes" else 0,
-    1 if coughing == "Yes" else 0,
-    1 if shortness_of_breath == "Yes" else 0,
-    1 if swallowing_difficulty == "Yes" else 0,
-    1 if chest_pain == "Yes" else 0,
-]])
+smoking = st.selectbox("Smoking (0=No, 1=Yes):", [0, 1])
+yellow_fingers = st.selectbox("Yellow Fingers (0=No, 1=Yes):", [0, 1])
+anxiety = st.selectbox("Anxiety (0=No, 1=Yes):", [0, 1])
+peer_pressure = st.selectbox("Peer Pressure (0=No, 1=Yes):", [0, 1])
+chronic_disease = st.selectbox("Chronic Disease (0=No, 1=Yes):", [0, 1])
+fatigue = st.selectbox("Fatigue (0=No, 1=Yes):", [0, 1])
+allergy = st.selectbox("Allergy (0=No, 1=Yes):", [0, 1])
+wheezing = st.selectbox("Wheezing (0=No, 1=Yes):", [0, 1])
+alcohol_consuming = st.selectbox("Alcohol Consuming (0=No, 1=Yes):", [0, 1])
+coughing = st.selectbox("Coughing (0=No, 1=Yes):", [0, 1])
+shortness_of_breath = st.selectbox("Shortness of Breath (0=No, 1=Yes):", [0, 1])
+swallowing_difficulty = st.selectbox("Swallowing Difficulty (0=No, 1=Yes):", [0, 1])
+chest_pain = st.selectbox("Chest Pain (0=No, 1=Yes):", [0, 1])
 
 # Bashorat qilish
 if st.button("Predict"):
+    features = np.array([[gender, age, smoking, yellow_fingers, anxiety, peer_pressure,
+                          chronic_disease, fatigue, allergy, wheezing, alcohol_consuming,
+                          coughing, shortness_of_breath, swallowing_difficulty, chest_pain]])
+    
     prediction = model.predict(features)
     result = "Lung Cancer Detected" if prediction[0] == 1 else "No Lung Cancer Detected"
-    st.success(f"Prediction: {result}")
+    st.subheader(f"Prediction Result: {result}")
