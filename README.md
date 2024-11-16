@@ -1,0 +1,2 @@
+# lung_cancer_prediction_model1
+this is lung_cancer_prediction_model
